@@ -1,5 +1,10 @@
-jdk:
-  - openjdk21
+before_install:
+  # Force Java 21 via SDKMAN on JitPack's image
+  - sdk install java 21.0.4-tem || true
+  - sdk use java 21.0.4-tem
+  - java -version
+  - ./mvnw -v
 
 install:
-  - ./mvnw -DskipTests clean install
+  # Skip compiling & running tests; just build/install the jar
+  - ./mvnw -Dmaven.test.skip=true clean install
